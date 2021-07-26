@@ -1,4 +1,4 @@
-package com.george.ktorapp.ui.viewmodel
+package com.george.ktorapp.ui.viewmodel.fragmentsViewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

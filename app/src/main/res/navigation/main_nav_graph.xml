@@ -10,4 +10,5 @@
         android:name="com.george.ktorapp.ui.activities.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+
 </navigation>

@@ -7,8 +7,8 @@
     <color name="secondary">#40d2ff</color>
     <color name="s_dark">#0083da</color>
 
-    <color name="p_text">#FF000000</color>
+    <color name="p_text">#FFFFFFFF</color>
 
-    <color name="edit_text_bg_color">#FFDDDDDD</color>
-    <color name="bg_color">#FFEFEFEF</color>
+    <color name="edit_text_bg_color">#FF222222</color>
+    <color name="bg_color">#FF101010</color>
 </resources>
