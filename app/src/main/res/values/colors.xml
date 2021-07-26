@@ -10,5 +10,6 @@
     <color name="p_text">#FF000000</color>
 
     <color name="edit_text_bg_color">#FFDDDDDD</color>
+    <color name="section_bg_color">#FFBCBCBC</color>
     <color name="bg_color">#FFEFEFEF</color>
 </resources>

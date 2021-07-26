@@ -1,4 +1,4 @@
-package com.george.ktorapp.ui.activities
+package com.george.ktorapp.ui.activities.loginRegisterActivity
 
 import com.george.ktorapp.databinding.ActivityLoginRegisterBinding
 import com.george.ktorapp.ui.base.BaseActivity
@@ -9,6 +9,10 @@ class LoginRegisterActivity : BaseActivity<ActivityLoginRegisterBinding, LoginRe
 ) {
 
     override val TAG: String get() = this.javaClass.name
+
+    override fun initialization() {
+
+    }
 
     override fun setListener() {
         binding.apply {

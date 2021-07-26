@@ -7,8 +7,14 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.george.ktorapp.ui.activities.fragments.MainFragment"
+        android:name="com.george.ktorapp.ui.activities.mainActivity.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.george.ktorapp.ui.activities.mainActivity.fragments.SettingFragment"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_setting"/>
 
 </navigation>

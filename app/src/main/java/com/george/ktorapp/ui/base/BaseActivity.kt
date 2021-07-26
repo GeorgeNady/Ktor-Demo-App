@@ -23,10 +23,11 @@ abstract class BaseActivity<B : ViewBinding,VM : ViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        initialization()
         setListener()
     }
 
+    abstract fun initialization()
     abstract fun setListener()
 
     private fun getViewModelClass(): Class<VM> {

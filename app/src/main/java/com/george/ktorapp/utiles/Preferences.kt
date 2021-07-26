@@ -12,8 +12,18 @@ class Preferences(context: Context) {
 
     companion object {
 
+        // SHARED PREFERENCES Name
         private const val PREFS_NAME = "MySharedPref"
+
+        // USER DATA
         const val TOKEN_PREF = "token"
+        const val USER_NAME_PREF = "user_name"
+        const val USER_EMAIL_PREF = "user_email"
+        const val USER_PHONE_PREF = "user_phone"
+
+        // NETWORK DATA
+        const val DOMAIN_PREF = "domain"
+        const val PORT_PREF = "port"
 
         // we can use this Singleton object of Prefs and use from anywhere within the app.
         val prefs: Preferences by lazy {
@@ -46,6 +56,26 @@ class Preferences(context: Context) {
     var prefsToken: String
         get() = sharedPrefs.getString(TOKEN_PREF, "") ?: ""
         set(value) = sharedPrefs.edit { putString(TOKEN_PREF, value) }
+
+    var prefsUserName: String
+        get() = sharedPrefs.getString(USER_NAME_PREF, "") ?: ""
+        set(value) = sharedPrefs.edit { putString(USER_NAME_PREF, value) }
+
+    var prefsEmail: String
+        get() = sharedPrefs.getString(USER_EMAIL_PREF, "") ?: ""
+        set(value) = sharedPrefs.edit { putString(USER_EMAIL_PREF, value) }
+
+    var prefsPhone: String
+        get() = sharedPrefs.getString(USER_PHONE_PREF, "") ?: ""
+        set(value) = sharedPrefs.edit { putString(USER_PHONE_PREF, value) }
+
+    var prefsDomain: String
+        get() = sharedPrefs.getString(DOMAIN_PREF, "") ?: ""
+        set(value) = sharedPrefs.edit { putString(DOMAIN_PREF, value) }
+
+    var prefsPort: String
+        get() = sharedPrefs.getString(PORT_PREF, "") ?: ""
+        set(value) = sharedPrefs.edit { putString(PORT_PREF, value) }
 
     // var myObject: MyObject?
     //     get() {

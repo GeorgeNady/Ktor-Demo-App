@@ -2,11 +2,6 @@ package com.george.ktorapp.ui.base
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.george.ktorapp.R
-import com.george.ktorapp.ui.activities.fragments.MainFragment
 import com.volokh.danylo.hashtaghelper.HashTagHelper
 
 

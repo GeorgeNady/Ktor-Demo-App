@@ -7,14 +7,20 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        tools:layout="@layout/fragment_login"
-        android:name="com.george.ktorapp.ui.activities.fragments.LoginFragment"
-        android:label="LoginFragment" />
+        android:name="com.george.ktorapp.ui.activities.loginRegisterActivity.fragments.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login" />
 
     <fragment
         android:id="@+id/registerFragment"
-        tools:layout="@layout/fragment_register"
-        android:name="com.george.ktorapp.ui.activities.fragments.RegisterFragment"
-        android:label="RegisterFragment" />
+        android:name="com.george.ktorapp.ui.activities.loginRegisterActivity.fragments.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register" />
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.george.ktorapp.ui.activities.mainActivity.fragments.SettingFragment"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_setting" />
 
 </navigation>

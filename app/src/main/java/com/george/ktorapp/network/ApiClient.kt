@@ -1,5 +1,7 @@
 package com.george.ktorapp.network
 
+import com.george.ktorapp.utiles.Preferences.Companion.prefs
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -12,13 +14,15 @@ class ApiClient {
 
     companion object {
 
-        private const val BASE_URL = "http://192.168.1.254:6060"
+        private val DOMAIN = prefs.prefsDomain
+        private val PORT = prefs.prefsPort
+        private val BASE_URL = "http://$DOMAIN:$PORT/api/v1/"
 
         private val retrofit by lazy {
 
             val logging = HttpLoggingInterceptor()
 
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+            logging.level = HttpLoggingInterceptor.Level.BODY
 
             val client = OkHttpClient.Builder()
                 .connectTimeout(2, TimeUnit.MINUTES)
@@ -37,6 +41,7 @@ class ApiClient {
             Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .client(client)
                 .build()
         }

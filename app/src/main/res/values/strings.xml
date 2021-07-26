@@ -10,4 +10,7 @@
     <string name="login_now">Login Now</string>
     <string name="you_don_t_have_an_account">you don\'t have an account ?</string>
     <string name="sing_up">SING UP</string>
+    <string name="domain">domain</string>
+    <string name="port">port</string>
+    <string name="ktor_demo_app">Ktor-Demo-App</string>
 </resources>

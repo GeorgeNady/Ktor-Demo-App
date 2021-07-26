@@ -1,4 +1,4 @@
-package com.george.ktorapp.ui.activities.fragments
+package com.george.ktorapp.ui.activities.mainActivity.fragments
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
