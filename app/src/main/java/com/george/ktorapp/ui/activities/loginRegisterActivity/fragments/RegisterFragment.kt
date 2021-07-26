@@ -1,14 +1,17 @@
 package com.george.ktorapp.ui.activities.loginRegisterActivity.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.george.ktorapp.model.Auth.RegisterRequest
 import com.george.ktorapp.R
 import com.george.ktorapp.databinding.FragmentRegisterBinding
+import com.george.ktorapp.ui.activities.mainActivity.MainActivity
 import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
 import com.george.ktorapp.ui.base.BaseFragment
 import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.RegisterFragmentViewModel
+import com.george.ktorapp.utiles.Preferences.Companion.prefs
 
 @SuppressLint("NonConstantResourceId")
 @ActivityFragmentAnnoation(contentId = R.layout.fragment_register)
@@ -34,19 +37,17 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                 findNavController().popBackStack()
             }
             btnSignup.setOnClickListener {
-                val name = etName.text.toString()
-                val email = etEmail.text.toString()
-                val phone = etPhone.text.toString()
-                val password = etPassword.text.toString()
-                val registerRequest = RegisterRequest(name,email,password,phone)
+                val registerRequest = RegisterRequest(
+                    username = etName.text.toString(),
+                    email = etEmail.text.toString(),
+                    password = etPassword.text.toString(),
+                    phone = etPhone.text.toString()
+                )
                 viewModel.register(registerRequest,progressBar,btnSignup).observe(this@RegisterFragment,{ res ->
                     if (res != null) {
-                        /*prefs.apply {
-                            prefsToken = res.user.token
-                            prefsUserName = res.user.username
-                            prefsEmail = res.user.email
-                            prefsPhone = res.user.phone
-                        }*/
+                        val intent = Intent(requireActivity(), MainActivity::class.java)
+                        requireActivity().startActivity(intent)
+                        requireActivity().finish()
                     }
                 })
             }

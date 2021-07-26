@@ -12,8 +12,6 @@ data class User(
     val email: String,
     @SerializedName("password") @Expose
     val password: String,
-    @SerializedName("token") @Expose
-    val token: String,
     @SerializedName("phone") @Expose
     val phone: String
 ) : Serializable

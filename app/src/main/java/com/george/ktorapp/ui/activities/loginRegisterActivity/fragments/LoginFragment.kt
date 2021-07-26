@@ -1,6 +1,7 @@
 package com.george.ktorapp.ui.activities.loginRegisterActivity.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -9,9 +10,11 @@ import com.george.Models.Person.AuthRequests.LoginRequest
 import com.george.ktorapp.R
 import com.george.ktorapp.databinding.FragmentLoginBinding
 import com.george.ktorapp.model.Auth.RegisterRequest
+import com.george.ktorapp.ui.activities.mainActivity.MainActivity
 import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
 import com.george.ktorapp.ui.base.BaseFragment
 import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.LoginFragmentViewModel
+import com.george.ktorapp.utiles.Preferences
 
 @SuppressLint("NonConstantResourceId")
 @ActivityFragmentAnnoation(contentId = R.layout.fragment_login)
@@ -34,17 +37,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 findNavController().navigate(R.id.settingFragment)
             }
             btnLogin.setOnClickListener {
-                val email = etEmail.text.toString()
-                val password = etPassword.text.toString()
-                val loginRequest = LoginRequest(email,password)
+                val loginRequest = LoginRequest(
+                    email = etEmail.text.toString(),
+                    password = etPassword.text.toString()
+                )
                 viewModel.login(loginRequest,progressBar,btnLogin).observe(this@LoginFragment,{ res ->
                     if (res != null) {
-                        /*prefs.apply {
-                            prefsToken = res.user.token
-                            prefsUserName = res.user.username
-                            prefsEmail = res.user.email
-                            prefsPhone = res.user.phone
-                        }*/
+                        val intent = Intent(requireActivity(), MainActivity::class.java)
+                        requireActivity().startActivity(intent)
+                        requireActivity().finish()
                     }
                 })
             }
