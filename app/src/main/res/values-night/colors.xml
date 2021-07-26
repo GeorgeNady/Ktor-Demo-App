@@ -8,8 +8,10 @@
     <color name="s_dark">#0083da</color>
 
     <color name="p_text">#FFFFFFFF</color>
+    <color name="s_text">#FF000000</color>
 
     <color name="edit_text_bg_color">#FF222222</color>
+    <color name="edit_text_bg_color2">#FF000000</color>
     <color name="section_bg_color">#FF343434</color>
     <color name="bg_color">#FF101010</color>
 </resources>

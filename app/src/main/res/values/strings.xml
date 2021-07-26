@@ -13,4 +13,5 @@
     <string name="domain">domain</string>
     <string name="port">port</string>
     <string name="ktor_demo_app">Ktor-Demo-App</string>
+    <string name="hello">Hello</string>
 </resources>

@@ -2,7 +2,6 @@ package com.george.ktorapp.utiles
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.core.content.edit
 import com.george.ktorapp.MyApplication
 import com.google.gson.Gson
@@ -16,7 +15,8 @@ class Preferences(context: Context) {
         private const val PREFS_NAME = "MySharedPref"
 
         // USER DATA
-        const val TOKEN_PREF = "token"
+        const val USER_TOKEN_PREF = "token"
+        const val USER_ID_PREF = "user_id"
         const val USER_NAME_PREF = "user_name"
         const val USER_EMAIL_PREF = "user_email"
         const val USER_PHONE_PREF = "user_phone"
@@ -54,18 +54,22 @@ class Preferences(context: Context) {
     }
 
     var prefsToken: String
-        get() = sharedPrefs.getString(TOKEN_PREF, "") ?: ""
-        set(value) = sharedPrefs.edit { putString(TOKEN_PREF, value) }
+        get() = sharedPrefs.getString(USER_TOKEN_PREF, "") ?: ""
+        set(value) = sharedPrefs.edit { putString(USER_TOKEN_PREF, value) }
+
+    var prefsUserId: String
+        get() = sharedPrefs.getString(USER_ID_PREF, "") ?: ""
+        set(value) = sharedPrefs.edit { putString(USER_ID_PREF, value) }
 
     var prefsUserName: String
         get() = sharedPrefs.getString(USER_NAME_PREF, "") ?: ""
         set(value) = sharedPrefs.edit { putString(USER_NAME_PREF, value) }
 
-    var prefsEmail: String
+    var prefsUserEmail: String
         get() = sharedPrefs.getString(USER_EMAIL_PREF, "") ?: ""
         set(value) = sharedPrefs.edit { putString(USER_EMAIL_PREF, value) }
 
-    var prefsPhone: String
+    var prefsUserPhone: String
         get() = sharedPrefs.getString(USER_PHONE_PREF, "") ?: ""
         set(value) = sharedPrefs.edit { putString(USER_PHONE_PREF, value) }
 

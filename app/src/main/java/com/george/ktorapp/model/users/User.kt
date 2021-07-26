@@ -6,6 +6,8 @@ import java.io.Serializable
 
 
 data class User(
+    @SerializedName("id") @Expose
+    val id: String,
     @SerializedName("username") @Expose
     val username: String,
     @SerializedName("email") @Expose
