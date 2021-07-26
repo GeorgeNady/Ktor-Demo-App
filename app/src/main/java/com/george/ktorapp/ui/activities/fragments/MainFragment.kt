@@ -1,13 +1,12 @@
 package com.george.ktorapp.ui.activities.fragments
 
 import android.annotation.SuppressLint
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.george.ktorapp.databinding.FragmentMainBinding
 import com.george.ktorapp.R
 import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
 import com.george.ktorapp.ui.base.BaseFragment
-import com.george.ktorapp.ui.viewmodel.MainFragmentViewModel
+import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.MainFragmentViewModel
 
 @SuppressLint("NonConstantResourceId")
 @ActivityFragmentAnnoation(contentId = R.layout.fragment_main)
@@ -26,7 +25,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     override fun setListener() {
         binding?.apply {
-            progressPagination.visibility = View.VISIBLE
+
         }
     }
 

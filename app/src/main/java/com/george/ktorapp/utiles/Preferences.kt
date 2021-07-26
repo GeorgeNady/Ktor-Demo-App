@@ -2,6 +2,7 @@ package com.george.ktorapp.utiles
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.content.edit
 import com.george.ktorapp.MyApplication
 import com.google.gson.Gson

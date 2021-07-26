@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">KtorApp</string>
+    <string name="sign_up_for_free">SIGN UP FOR FREE</string>
+    <string name="you_already_have_an_account">you already have an account ?</string>
+    <string name="login">LOGIN</string>
+    <string name="password">password</string>
+    <string name="phone">phone</string>
+    <string name="email_domain_com">email@domain.com</string>
+    <string name="name">name</string>
+    <string name="login_now">Login Now</string>
+    <string name="you_don_t_have_an_account">you don\'t have an account ?</string>
+    <string name="sing_up">SING UP</string>
 </resources>

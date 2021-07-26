@@ -1,6 +1,7 @@
 package com.george.ktorapp
 
 import android.app.Application
+import android.util.Log
 
 class MyApplication: Application() {
 
