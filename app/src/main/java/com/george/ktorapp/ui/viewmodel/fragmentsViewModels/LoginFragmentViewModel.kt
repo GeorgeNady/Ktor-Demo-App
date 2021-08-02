@@ -1,6 +1,7 @@
 package com.george.ktorapp.ui.viewmodel.fragmentsViewModels
 
 import android.app.Application
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -11,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import com.george.Models.Person.AuthRequests.LoginRequest
 import com.george.ktorapp.model.Auth.AuthResponse
 import com.george.ktorapp.network.ApiClient
+import com.george.ktorapp.network.ApiClient.Companion.api
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
@@ -34,12 +36,13 @@ class LoginFragmentViewModel(val app: Application) : AndroidViewModel(app) {
     private fun prepareLoginResponse(loginRequest: LoginRequest, progressBar: ProgressBar, button:Button) {
         progressBar.visibility = View.VISIBLE
         button.visibility = View.GONE
-        val loginResponseObservable = ApiClient.api.login(loginRequest)
+        val loginResponseObservable = api.login(loginRequest)
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
         val loginResponseObserver = object : Observer<AuthResponse> {
             override fun onSubscribe(d: Disposable?) {}
             override fun onNext(authResponse: AuthResponse?) {
+                Log.i(TAG, "onNext: ${authResponse?.toString()}")
                 loginResponseLiveData.value = authResponse
                 prefs.apply {
                     prefsToken = authResponse!!.message
@@ -49,6 +52,7 @@ class LoginFragmentViewModel(val app: Application) : AndroidViewModel(app) {
                     prefsUserPhone = authResponse.user.phone
                 }
                 Toast.makeText(app,authResponse?.message, Toast.LENGTH_LONG).show()
+                Log.i(TAG, "onNext: ${authResponse?.message}")
             }
             override fun onError(e: Throwable?) {
                 progressBar.visibility = View.GONE

@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/auth_edit_text_bg"
     android:padding="@dimen/_15sdp"
     android:layout_margin="@dimen/_15sdp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:ignore="UseCompoundDrawables">
+<!--    android:background="@drawable/auth_edit_text_bg"-->
 
     <ImageView
         android:layout_width="@dimen/_124sdp"

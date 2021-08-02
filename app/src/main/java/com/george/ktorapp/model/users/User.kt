@@ -1,4 +1,4 @@
-package com.george.Models.Person.users
+package com.george.ktorapp.model.users
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -6,7 +6,7 @@ import java.io.Serializable
 
 
 data class User(
-    @SerializedName("id") @Expose
+    @SerializedName("_id") @Expose
     val id: String,
     @SerializedName("username") @Expose
     val username: String,

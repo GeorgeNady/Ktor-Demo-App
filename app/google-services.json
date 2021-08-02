@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "783604029549",
+    "project_id": "hosha-925de",
+    "storage_bucket": "hosha-925de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783604029549:android:0b3de6966936fe321e8764",
+        "android_client_info": {
+          "package_name": "com.george.ktorapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783604029549-dl8t4ukivmniq3r0f5q78hr72f5ho4oo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFNTD2IVkvbYNM0GfVDH3fsVkFbmlNFHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783604029549-dl8t4ukivmniq3r0f5q78hr72f5ho4oo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

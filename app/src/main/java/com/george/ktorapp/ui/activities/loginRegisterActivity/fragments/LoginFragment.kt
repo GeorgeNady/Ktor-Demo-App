@@ -2,19 +2,18 @@ package com.george.ktorapp.ui.activities.loginRegisterActivity.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.george.Models.Person.AuthRequests.LoginRequest
 import com.george.ktorapp.R
 import com.george.ktorapp.databinding.FragmentLoginBinding
-import com.george.ktorapp.model.Auth.RegisterRequest
 import com.george.ktorapp.ui.activities.mainActivity.MainActivity
 import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
 import com.george.ktorapp.ui.base.BaseFragment
 import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.LoginFragmentViewModel
-import com.george.ktorapp.utiles.Preferences
+import kotlin.properties.Delegates
 
 @SuppressLint("NonConstantResourceId")
 @ActivityFragmentAnnoation(contentId = R.layout.fragment_login)
@@ -22,6 +21,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     override val TAG: String get() = this.javaClass.name
     private lateinit var viewModel: LoginFragmentViewModel
+    private var canLogin by Delegates.notNull<Boolean>()
 
     override fun initialization() {
 
@@ -37,18 +37,41 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 findNavController().navigate(R.id.settingFragment)
             }
             btnLogin.setOnClickListener {
-                val loginRequest = LoginRequest(
-                    email = etEmail.text.toString(),
-                    password = etPassword.text.toString()
-                )
-                viewModel.login(loginRequest,progressBar,btnLogin).observe(this@LoginFragment,{ res ->
-                    if (res != null) {
-                        val intent = Intent(requireActivity(), MainActivity::class.java)
-                        requireActivity().startActivity(intent)
-                        requireActivity().finish()
+
+                val email = etEmail.text.toString()
+                val pass = etPassword.text.toString()
+
+                val loginRequest = LoginRequest(email, pass)
+
+                val inputs = mapOf("email" to email, "pass" to pass)
+                val inputsRepleteState = mutableListOf<Boolean>()
+
+                inputs.forEach {
+                    when(it.key) {
+                        "email" -> if (it.value.isEmpty()) etEmail.error = "Missing Email Value"
+                        "pass" -> if (it.value.isEmpty()) etPassword.error = "Missing Password Value"
                     }
-                })
+                }
+
+                inputs.forEach {
+                    if (it.value.isEmpty()) inputsRepleteState.add(false) else inputsRepleteState.add(true)
+                }
+
+                canLogin = !inputsRepleteState.contains(false)
+
+                Log.d(TAG, "setListener: $canLogin")
+
+                if (canLogin) {
+                    viewModel.login(loginRequest,progressBar,btnLogin).observe(this@LoginFragment,{ res ->
+                        if (res != null) {
+                            val intent = Intent(requireActivity(), MainActivity::class.java)
+                            requireActivity().startActivity(intent)
+                            requireActivity().finish()
+                        }
+                    })
+                }
             }
+
             btnSignup.setOnClickListener {
                 findNavController().navigate(
                     R.id.registerFragment,

@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="layout_padding">@dimen/_20sdp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="corner_radius">15dp</dimen>
+    <dimen name="h1_text_size">24sp</dimen>
+    <dimen name="h2_text_size">22sp</dimen>
+    <dimen name="p1_text_size">18sp</dimen>
+    <dimen name="p2_text_size">20sp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="margin_horizontal">@dimen/_20sdp</dimen>
+    <dimen name="margin_vertical">@dimen/_12sdp</dimen>
 </resources>

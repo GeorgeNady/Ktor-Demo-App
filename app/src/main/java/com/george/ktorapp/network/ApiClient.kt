@@ -16,7 +16,7 @@ class ApiClient {
 
         private val DOMAIN = prefs.prefsDomain
         private val PORT = prefs.prefsPort
-        private val BASE_URL = "http://$DOMAIN:$PORT/api/v1/"
+        private val BASE_URL = "http://192.168.1.$DOMAIN:$PORT/api/v1/"
 
         private val retrofit by lazy {
 
@@ -25,9 +25,9 @@ class ApiClient {
             logging.level = HttpLoggingInterceptor.Level.BODY
 
             val client = OkHttpClient.Builder()
-                .connectTimeout(2, TimeUnit.MINUTES)
-                .writeTimeout(2, TimeUnit.MINUTES)
-                .readTimeout(2, TimeUnit.MINUTES)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor { chain: Interceptor.Chain ->
                     val original = chain.request()
                     val request =

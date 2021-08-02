@@ -1,7 +1,6 @@
 package com.george.ktorapp.ui.viewmodel.fragmentsViewModels
 
 import android.app.Application
-import android.content.res.Resources
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -13,26 +12,24 @@ import androidx.lifecycle.MutableLiveData
 import com.george.ktorapp.model.posts.CreatePostRequest
 import com.george.ktorapp.model.posts.InsDelPostResponse
 import com.george.ktorapp.model.posts.GetPostsResponse
+import com.george.ktorapp.model.posts.Post
 import com.george.ktorapp.network.ApiClient.Companion.api
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import okhttp3.ResponseBody
-import retrofit2.HttpException
-import retrofit2.Response
-import retrofit2.http.HTTP
 
-class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
+class MyPostsFragmentViewModel(val app: Application) : AndroidViewModel(app) {
 
     companion object {
-        const val TAG = "MainFragmentViewModel"
+        const val TAG = "MyPostsFragmentViewModel"
     }
+    val myPostsList = mutableListOf<Post>()
+    var myPostsPage = 1
 
-    private lateinit var insertPostResponseLiveData: MutableLiveData<InsDelPostResponse>
-    private lateinit var postsResponseLiveData: MutableLiveData<GetPostsResponse>
-    private lateinit var deletePostResponseLiveData: MutableLiveData<InsDelPostResponse>
+    private lateinit var postResponseLiveData: MutableLiveData<InsDelPostResponse>
+    private lateinit var myPostsResponseLiveData: MutableLiveData<GetPostsResponse>
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////// NETWORK CALL /////////////////////////////////////////
@@ -42,27 +39,18 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
         progressBar: ProgressBar,
         button: ImageView
     ): LiveData<InsDelPostResponse> {
-        insertPostResponseLiveData = MutableLiveData<InsDelPostResponse>()
+        postResponseLiveData = MutableLiveData<InsDelPostResponse>()
         prepareCreatePostResponse(postRequest, progressBar, button)
-        return insertPostResponseLiveData
+        return postResponseLiveData
     }
 
-    fun getPosts(
+    fun getMyPosts(
         page: Int,
         progressBar: ProgressBar
     ): LiveData<GetPostsResponse> {
-        postsResponseLiveData = MutableLiveData<GetPostsResponse>()
-        prepareGetPostsResponse(page, progressBar)
-        return postsResponseLiveData
-    }
-
-    fun deletePost(
-        postId: String,
-        progressBar: ProgressBar?
-    ): LiveData<InsDelPostResponse> {
-        deletePostResponseLiveData = MutableLiveData<InsDelPostResponse>()
-        prepareDeletePostResponse(postId, progressBar)
-        return deletePostResponseLiveData
+        myPostsResponseLiveData = MutableLiveData<GetPostsResponse>()
+        prepareGetMyPostsResponse(page, progressBar)
+        return myPostsResponseLiveData
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +69,7 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
         val postResponseObserver = object : Observer<InsDelPostResponse> {
             override fun onSubscribe(d: Disposable?) {}
             override fun onNext(postResponse: InsDelPostResponse?) {
-                insertPostResponseLiveData.value = postResponse
+                postResponseLiveData.value = postResponse
                 Log.i(LoginFragmentViewModel.TAG, "onNext: ${postResponse?.message}")
             }
 
@@ -99,18 +87,18 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
         postResponseObservable.subscribe(postResponseObserver)
     }
 
-    private fun prepareGetPostsResponse(
+    private fun prepareGetMyPostsResponse(
         page: Int,
         progressBar: ProgressBar
     ) {
         progressBar.visibility = View.VISIBLE
-        val postsResponseObservable = api.getPosts(page, prefs.prefsToken)
+        val myPostsResponseObservable = api.getMyPosts(page, prefs.prefsToken)
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
-        val postsResponseObserver = object : Observer<GetPostsResponse> {
+        val myPostsResponseObserver = object : Observer<GetPostsResponse> {
             override fun onSubscribe(d: Disposable?) {}
             override fun onNext(postsResponse: GetPostsResponse?) {
-                postsResponseLiveData.value = postsResponse
+                myPostsResponseLiveData.value = postsResponse
 //                Toast.makeText(app,postsResponse?.message, Toast.LENGTH_LONG).show()
                 Log.i(LoginFragmentViewModel.TAG, "onNext: ${postsResponse?.message}")
             }
@@ -124,57 +112,6 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
                 progressBar.visibility = View.GONE
             }
         }
-        postsResponseObservable.subscribe(postsResponseObserver)
-    }
-
-    private fun prepareDeletePostResponse(
-        postId:String,
-        progressBar: ProgressBar?
-    ) {
-        progressBar?.visibility = View.VISIBLE
-
-        val observable = api.deletePost(postId, prefs.prefsToken)
-            .subscribeOn(Schedulers.single())
-            .observeOn(AndroidSchedulers.mainThread())
-
-        val observer = object :  Observer<InsDelPostResponse> {
-            override fun onSubscribe(d: Disposable?) {}
-            override fun onNext(response: InsDelPostResponse?) {
-                deletePostResponseLiveData.value = response
-                Log.i(LoginFragmentViewModel.TAG, "onNext: ${response?.message}")
-            }
-
-            override fun onError(e: Throwable?) {
-                progressBar?.visibility = View.GONE
-                Log.e(TAG, "onError: ${e?.message}")
-                Log.e(TAG, "onError: ${e}")
-
-                Toast.makeText(app,"you are not authorized to delete this post", Toast.LENGTH_LONG).show()
-                
-                val error = e as HttpException
-                
-                when {
-                    error.code() == 400  -> {
-                        Toast.makeText(app,"you are not authorized to delete this post", Toast.LENGTH_LONG).show()
-                        Log.e(TAG, "onError: ${error.message()}" )
-                        Log.e(TAG, "onError: ${error.response()}" )
-                        Log.e(TAG, "onError: ${error}" )
-                    }
-                    error.code() == 404 -> {
-
-                    }
-                }
-            }
-
-            override fun onComplete() {
-                progressBar?.visibility = View.GONE
-            }
-        }
-        observable.subscribe(observer)
+        myPostsResponseObservable.subscribe(myPostsResponseObserver)
     }
 }
-
-data class exiption (
-    val success:String,
-    val message:String
-        )

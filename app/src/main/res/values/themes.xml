@@ -13,5 +13,27 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/bg_color</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <!-- Customize your theme here. -->
+        <item name="android:popupMenuStyle">@style/popup</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceLarge</item>
+        <item name="android:textAppearanceSmallPopupMenu">@style/myPopupMenuTextAppearanceSmall</item>
     </style>
+
+    <!-- ************************************************************************* popup -->
+    <style name="popup">
+        <item name="android:popupBackground">@drawable/custom_popup_bg</item>
+        <item name="android:popupAnimationStyle">@android:anim/anticipate_interpolator</item>
+        <item name="android:popupElevation">@dimen/corner_radius</item>
+        <item name="android:popupEnterTransition" tools:targetApi="n">@android:transition/fade</item>
+        <item name="android:popupExitTransition" tools:targetApi="n">@android:transition/fade</item>
+        <item name="rippleColor">@color/stroke</item>
+    </style>
+    <style name="myPopupMenuTextAppearanceSmall" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Small">
+        <item name="android:textColor">@color/p_text</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="myPopupMenuTextAppearanceLarge" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Large">
+        <item name="android:textColor">@color/p_text</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
 </resources>

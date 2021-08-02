@@ -12,6 +12,13 @@
 
     <color name="edit_text_bg_color">#FF222222</color>
     <color name="edit_text_bg_color2">#FF000000</color>
+    <color name="card_color">#FF111111</color>
     <color name="section_bg_color">#FF343434</color>
-    <color name="bg_color">#FF101010</color>
+    <color name="bg_color">#FF111111</color>
+
+    <color name="line_bold_color">#33FFFFFF</color>
+    <color name="line_light_color">#1AFFFFFF</color>
+
+    <color name="stroke">#35ffffff</color>
+
 </resources>

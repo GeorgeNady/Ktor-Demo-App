@@ -17,4 +17,10 @@
         android:label="SettingFragment"
         tools:layout="@layout/fragment_setting"/>
 
+    <fragment
+        android:id="@+id/myPostsFragment"
+        android:name="com.george.ktorapp.ui.activities.mainActivity.fragments.MyPostsFragment"
+        android:label="MyPostsFragment"
+        tools:layout="@layout/fragment_my_posts"/>
+
 </navigation>
