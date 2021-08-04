@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.george.ktorapp.R
 import com.george.ktorapp.databinding.ItemPostBinding
 import com.george.ktorapp.model.posts.Post
-import com.george.ktorapp.ui.activities.mainActivity.fragments.MainFragment
 import com.george.ktorapp.ui.activities.mainActivity.fragments.MyPostsFragment
 
 class MyPostsAdapter(val context: Context, val owner: MyPostsFragment) :
@@ -23,7 +22,7 @@ class MyPostsAdapter(val context: Context, val owner: MyPostsFragment) :
         RecyclerView.ViewHolder(binding.root)
 
     private val differCallBack = object : DiffUtil.ItemCallback<Post>() {
-        override fun areItemsTheSame(oldItem: Post, newItem: Post) = oldItem.id == newItem.id
+        override fun areItemsTheSame(oldItem: Post, newItem: Post) = oldItem._id == newItem._id
         override fun areContentsTheSame(oldItem: Post, newItem: Post) = oldItem == newItem
     }
 
@@ -40,7 +39,7 @@ class MyPostsAdapter(val context: Context, val owner: MyPostsFragment) :
         val current = differ.currentList[position]
         holder.binding.apply {
             tvUserName.text = current.user.username
-            tvCreatedAt.text = current.created_at
+            tvLastUpdate.text = current.modified_at
             tvContent.text = current.content
             tvLikes.text = current.likes_count.toString()
             tvDislikes.text = current.dislike_count.toString()
@@ -71,7 +70,7 @@ class MyPostsAdapter(val context: Context, val owner: MyPostsFragment) :
                             true
                         }
                         R.id.miDelete -> {
-                            deletePost(current.id, progressBar /*current*/)
+                            deletePost(current._id, progressBar /*current*/)
                             true
                         }
                         else -> false
@@ -100,7 +99,7 @@ class MyPostsAdapter(val context: Context, val owner: MyPostsFragment) :
         var postIndex = 0
         var mPost:Post? = null
         for (post in differ.currentList) {
-            if (post.id == postId) {
+            if (post._id == postId) {
                 postIndex = differ.currentList.indexOf(post)
                 mPost = differ.currentList[postIndex]!!
             }

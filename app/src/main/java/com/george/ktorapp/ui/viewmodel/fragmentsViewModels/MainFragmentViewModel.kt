@@ -13,7 +13,9 @@ import androidx.lifecycle.MutableLiveData
 import com.george.ktorapp.model.posts.CreatePostRequest
 import com.george.ktorapp.model.posts.InsDelPostResponse
 import com.george.ktorapp.model.posts.GetPostsResponse
+import com.george.ktorapp.model.posts.react.ReactRequest
 import com.george.ktorapp.network.ApiClient.Companion.api
+import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.MainFragmentViewModel.Companion.TAG
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
@@ -33,6 +35,7 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
     private lateinit var insertPostResponseLiveData: MutableLiveData<InsDelPostResponse>
     private lateinit var postsResponseLiveData: MutableLiveData<GetPostsResponse>
     private lateinit var deletePostResponseLiveData: MutableLiveData<InsDelPostResponse>
+    private lateinit var reactPostResponseLiveData: MutableLiveData<InsDelPostResponse>
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////// NETWORK CALL /////////////////////////////////////////
@@ -63,6 +66,16 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
         deletePostResponseLiveData = MutableLiveData<InsDelPostResponse>()
         prepareDeletePostResponse(postId, progressBar)
         return deletePostResponseLiveData
+    }
+
+    fun react(
+        postId: String,
+        react: ReactRequest,
+        progressBar: ProgressBar
+    ): LiveData<InsDelPostResponse> {
+        reactPostResponseLiveData = MutableLiveData<InsDelPostResponse>()
+        prepareReactPostResponse(postId, react, progressBar)
+        return reactPostResponseLiveData
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,9 +185,49 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
         }
         observable.subscribe(observer)
     }
-}
 
-data class exiption (
-    val success:String,
-    val message:String
-        )
+    private fun prepareReactPostResponse(
+        postId:String,
+        react : ReactRequest,
+        progressBar: ProgressBar?
+    ) {
+        progressBar?.visibility = View.VISIBLE
+
+        val observable = api.react(postId, react,prefs.prefsToken)
+            .subscribeOn(Schedulers.single())
+            .observeOn(AndroidSchedulers.mainThread())
+
+        val observer = object :  Observer<InsDelPostResponse> {
+            override fun onSubscribe(d: Disposable?) {}
+            override fun onNext(response: InsDelPostResponse?) {
+                reactPostResponseLiveData.value = response
+                Log.i(LoginFragmentViewModel.TAG, "onNext: ${response?.message}")
+            }
+
+            override fun onError(e: Throwable?) {
+                progressBar?.visibility = View.GONE
+
+                Toast.makeText(app,"something went wrong", Toast.LENGTH_LONG).show()
+
+                val error = e as HttpException
+
+                when {
+                    error.code() == 400  -> {
+                        Toast.makeText(app,"you are not authorized to delete this post", Toast.LENGTH_LONG).show()
+                        Log.e(TAG, "onError: ${error.message()}" )
+                        Log.e(TAG, "onError: ${error.response()}" )
+                        Log.e(TAG, "onError: ${error}" )
+                    }
+                    error.code() == 404 -> {
+
+                    }
+                }
+            }
+
+            override fun onComplete() {
+                progressBar?.visibility = View.GONE
+            }
+        }
+        observable.subscribe(observer)
+    }
+}

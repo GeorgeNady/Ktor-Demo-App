@@ -25,8 +25,6 @@ class MyPostsFragmentViewModel(val app: Application) : AndroidViewModel(app) {
     companion object {
         const val TAG = "MyPostsFragmentViewModel"
     }
-    val myPostsList = mutableListOf<Post>()
-    var myPostsPage = 1
 
     private lateinit var postResponseLiveData: MutableLiveData<InsDelPostResponse>
     private lateinit var myPostsResponseLiveData: MutableLiveData<GetPostsResponse>

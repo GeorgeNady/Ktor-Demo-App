@@ -6,6 +6,7 @@ import com.george.ktorapp.model.Auth.AuthResponse;
 import com.george.ktorapp.model.posts.CreatePostRequest;
 import com.george.ktorapp.model.posts.InsDelPostResponse;
 import com.george.ktorapp.model.posts.GetPostsResponse;
+import com.george.ktorapp.model.posts.react.ReactRequest;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
@@ -13,6 +14,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -61,21 +63,20 @@ public interface ApiInterface {
             @Header("Authorization") String token
     );
 
-//    @Headers({"Accept: application/json", "Content-Type:  application/json"})
-//    @POST("auth/edit-setting")
-//    Observable<SettingResponse>editSetting(@Body EditSetting editSetting,@Header("Authorization") String authorization);
+    @Headers({"Accept: application/json", "Content-Type:  application/json"})
+    @PATCH("social/posts/edit-post/{post_id}")
+    Observable<InsDelPostResponse> editPost(
+            @Path("post_id") String postId,
+            @Body CreatePostRequest updatesPostRequest,
+            @Header("Authorization") String token
+    );
 
-//    @Headers({"Accept: application/json", "Content-Type:  application/json"})
-//    @POST("social/challenge")
-//    Observable<Msg>invite(@Body Invite invite,@Header("Authorization") String authorization);
-
-//    @Headers({"Accept: application/json", "Content-Type:  application/json"})
-//    @POST("social/hide-clash")
-//    Observable<ForgetPassword>hideClash(@Body UnVote clash_id,@Header("Authorization") String authorization);
-
-//    @Headers({"Accept: application/json", "Content-Type:  application/json"})
-//    @POST("clashes/delete-clash")
-//    Observable<ForgetPassword>deleteClash(@Body UnVote clash_id,@Header("Authorization") String authorization);
-
+    @Headers({"Accept: application/json", "Content-Type:  application/json"})
+    @PATCH("social/posts/react-post/{post_id}")
+    Observable<InsDelPostResponse> react(
+            @Path("post_id") String postId,
+            @Body ReactRequest updatesPostRequest,
+            @Header("Authorization") String token
+    );
 
 }
