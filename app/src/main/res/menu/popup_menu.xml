@@ -5,13 +5,13 @@
         android:id="@+id/miEdit"
         android:icon="@drawable/ic_edit"
         android:iconTint="@color/secondary"
-        android:title="Edit Post" />
+        android:title="@string/edit_post" />
 
     <item
         android:id="@+id/miDelete"
         android:icon="@drawable/ic_delete"
         android:iconTint="@color/primary"
-        android:title="delete Post" />
+        android:title="@string/delete_post" />
 
 
 </menu>

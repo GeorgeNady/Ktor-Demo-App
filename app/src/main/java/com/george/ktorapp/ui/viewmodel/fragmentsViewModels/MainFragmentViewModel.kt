@@ -71,10 +71,11 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
     fun react(
         postId: String,
         react: ReactRequest,
-        progressBar: ProgressBar
+        progressBar: ProgressBar,
+        imageView: ImageView
     ): LiveData<InsDelPostResponse> {
         reactPostResponseLiveData = MutableLiveData<InsDelPostResponse>()
-        prepareReactPostResponse(postId, react, progressBar)
+        prepareReactPostResponse(postId, react, progressBar, imageView)
         return reactPostResponseLiveData
     }
 
@@ -189,9 +190,11 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
     private fun prepareReactPostResponse(
         postId:String,
         react : ReactRequest,
-        progressBar: ProgressBar?
+        progressBar: ProgressBar?,
+        imageView: ImageView?
     ) {
         progressBar?.visibility = View.VISIBLE
+        imageView?.visibility = View.GONE
 
         val observable = api.react(postId, react,prefs.prefsToken)
             .subscribeOn(Schedulers.single())
@@ -206,6 +209,7 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
 
             override fun onError(e: Throwable?) {
                 progressBar?.visibility = View.GONE
+                imageView?.visibility = View.VISIBLE
 
                 Toast.makeText(app,"something went wrong", Toast.LENGTH_LONG).show()
 
@@ -226,6 +230,7 @@ class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
 
             override fun onComplete() {
                 progressBar?.visibility = View.GONE
+                imageView?.visibility = View.VISIBLE
             }
         }
         observable.subscribe(observer)

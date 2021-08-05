@@ -6,8 +6,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import android.widget.ProgressBar
+import android.widget.*
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -51,10 +50,10 @@ class PostsAdapter(val context: Context, private val owner: MainFragment) :
             tvLastUpdate.text = current.modified_at
             tvContent.text = current.content
             with(current.likes_count) {
-                if (this <= 1 ) "$this like" else "$this likes"
+                if (this <= 1) "$this like" else "$this likes"
             }.also { tvLikes.text = it }
             with(current.dislike_count) {
-                if (this <= 1 ) "$this dislike" else "$this dislikes"
+                if (this <= 1) "$this dislike" else "$this dislikes"
             }.also { tvDislikes.text = it }
 
             when (current.my_react) {
@@ -100,15 +99,23 @@ class PostsAdapter(val context: Context, private val owner: MainFragment) :
             }
             root.setOnClickListener { onItemClickListener?.let { it(current) } }
             btnLike.setOnClickListener {
-                // onItemClickListener?.let { it(current) }
-                owner.viewModel.react(current._id, ReactRequest("like"),progressLike).observe(owner,{ post ->
-                    // TODO : update UI
-                })
+                owner.viewModel.react(current._id, ReactRequest("like"), progressLike, btnLike)
+                    .observe(owner, {
+                        // TODO : update UI
+                        onReactButtonsClick(true, btnLike, btnDisLike)
+                        // onReactTextClick(true,current.my_react,tvLikes,current.likes_count,tvDislikes,current.dislike_count)
+                    })
             }
             btnDisLike.setOnClickListener {
-                // onItemClickListener?.let { it(current) }
-                owner.viewModel.react(current._id, ReactRequest("dislike"), progressDisLike).observe(owner, { post ->
+                owner.viewModel.react(
+                    current._id,
+                    ReactRequest("dislike"),
+                    progressDisLike,
+                    btnDisLike
+                ).observe(owner, {
                     // TODO : update UI
+                    onReactButtonsClick(false, btnLike, btnDisLike)
+                    // onReactTextClick(false,current.my_react,tvLikes,current.likes_count,tvDislikes,current.dislike_count)
                 })
             }
         }
@@ -122,7 +129,7 @@ class PostsAdapter(val context: Context, private val owner: MainFragment) :
 
     private fun deletePost(postId: String, progressBar: ProgressBar) {
         var postIndex = 0
-        var mPost:Post? = null
+        var mPost: Post? = null
         for (post in differ.currentList) {
             if (post._id == postId) {
                 postIndex = differ.currentList.indexOf(post)
@@ -131,8 +138,52 @@ class PostsAdapter(val context: Context, private val owner: MainFragment) :
         }
         owner.apply {
             viewModel.deletePost(postId, progressBar)
-                .observe(this, { notifyDelete(mPost!!,postIndex) })
+                .observe(this, { notifyDelete(mPost!!, postIndex) })
         }
     }
+
+    private fun onReactButtonsClick(isLike: Boolean, btnLike: ImageView, btnDisLike: ImageView) {
+        when (isLike) {
+            true -> {
+                btnLike.setImageResource(R.drawable.ic_like_on)
+                btnDisLike.setImageResource(R.drawable.ic_dislike_off)
+            }
+            false -> {
+                btnLike.setImageResource(R.drawable.ic_like_off)
+                btnDisLike.setImageResource(R.drawable.ic_dislike_on)
+            }
+        }
+    }
+
+    // TODO :: need much more enhancements
+    private fun onReactTextClick(isLike: Boolean, myReact:String,tvLike: TextView,likes:Int, tvDisLike: TextView,dislikes:Int) {
+        val isLikeActed = myReact == "like"
+        val isDislikeActed = myReact == "dislike"
+        when (isLike) {
+            true -> {
+                when {
+                    !isLikeActed -> {
+                        tvLike.text = "${likes+1} likes"
+                        if (isDislikeActed) tvDisLike.text = "${dislikes-1} dislikes"
+                    }
+                    isLikeActed -> tvLike.text = "${likes-1} likes"
+                }
+            }
+            false -> {
+                when {
+                    !isDislikeActed -> {
+                        tvDisLike.text = "${dislikes+1} dislikes"
+                        if (isLikeActed) tvLike.text = "${likes-1} likes"
+                    }
+                    isDislikeActed -> tvDisLike.text = "${dislikes-1} dislikes"
+                }
+            }
+        }
+    }
+
+    private fun setSingleOrManyReactsText(num: Int, isLike: Boolean) =
+        if (isLike) if (num > 1) "likes" else "like"
+        else if (num > 1) "dislikes" else "dislike"
+
 
 }

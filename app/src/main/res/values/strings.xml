@@ -23,4 +23,6 @@
     <string name="hii">hii</string>
     <string name="welcome_to_your">Welcome to your</string>
     <string name="_192_168_1">192.168.1.</string>
+    <string name="delete_post">Delete Post</string>
+    <string name="edit_post">Edit Post</string>
 </resources>
