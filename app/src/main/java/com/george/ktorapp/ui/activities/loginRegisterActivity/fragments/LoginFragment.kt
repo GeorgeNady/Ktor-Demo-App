@@ -1,6 +1,5 @@
 package com.george.ktorapp.ui.activities.loginRegisterActivity.fragments
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
@@ -13,10 +12,10 @@ import com.george.ktorapp.ui.activities.mainActivity.MainActivity
 import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
 import com.george.ktorapp.ui.base.BaseFragment
 import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.LoginFragmentViewModel
+import com.george.ktorapp.utiles.Routes.LOGIN_ROUTE
 import kotlin.properties.Delegates
 
-@SuppressLint("NonConstantResourceId")
-@ActivityFragmentAnnoation(contentId = R.layout.fragment_login)
+@ActivityFragmentAnnoation(LOGIN_ROUTE)
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     override val TAG: String get() = this.javaClass.name

@@ -1,6 +1,5 @@
 package com.george.ktorapp.ui.activities.mainActivity.fragments
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
@@ -19,9 +18,9 @@ import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
 import com.george.ktorapp.ui.base.BaseFragment
 import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.MainFragmentViewModel
 import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.MyPostsFragmentViewModel
+import com.george.ktorapp.utiles.Routes.MY_POSTS_ROUTE
 
-@SuppressLint("NonConstantResourceId")
-@ActivityFragmentAnnoation(contentId = R.layout.fragment_my_posts)
+@ActivityFragmentAnnoation(MY_POSTS_ROUTE)
 class MyPostsFragment : BaseFragment<FragmentMyPostsBinding>() {
 
     override val TAG: String get() = this.javaClass.name

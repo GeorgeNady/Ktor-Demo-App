@@ -1,6 +1,5 @@
 package com.george.ktorapp.ui.activities.mainActivity.fragments
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
 import android.view.View
@@ -21,9 +20,9 @@ import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
 import com.george.ktorapp.ui.base.BaseFragment
 import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.MainFragmentViewModel
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
+import com.george.ktorapp.utiles.Routes.MAIN_ROUTE
 
-@SuppressLint("NonConstantResourceId")
-@ActivityFragmentAnnoation(contentId = R.layout.fragment_main)
+@ActivityFragmentAnnoation(MAIN_ROUTE)
 class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     override val TAG: String get() = this.javaClass.name

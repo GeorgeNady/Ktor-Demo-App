@@ -1,20 +1,15 @@
 package com.george.ktorapp.ui.activities.mainActivity.fragments
 
-import android.annotation.SuppressLint
 import android.view.View
-import android.widget.EditText
-import android.widget.TextView
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.george.ktorapp.R
 import com.george.ktorapp.databinding.FragmentSettingBinding
 import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
 import com.george.ktorapp.ui.base.BaseFragment
 import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.SettingFragmentViewModel
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
+import com.george.ktorapp.utiles.Routes.SETTING_ROUTE
 
-@SuppressLint("NonConstantResourceId")
-@ActivityFragmentAnnoation(contentId = R.layout.fragment_setting)
+@ActivityFragmentAnnoation(SETTING_ROUTE)
 class SettingFragment : BaseFragment<FragmentSettingBinding>() {
 
     override val TAG: String get() = this.javaClass.name
