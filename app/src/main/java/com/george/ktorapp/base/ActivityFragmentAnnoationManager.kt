@@ -1,4 +1,4 @@
-package com.george.ktorapp.ui.base
+package com.george.ktorapp.base
 
 object ActivityFragmentAnnoationManager {
     fun check(clazz: Any): Int {

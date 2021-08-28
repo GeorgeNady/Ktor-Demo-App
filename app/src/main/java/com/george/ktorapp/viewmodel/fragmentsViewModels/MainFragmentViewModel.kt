@@ -1,7 +1,6 @@
-package com.george.ktorapp.ui.viewmodel.fragmentsViewModels
+package com.george.ktorapp.viewmodel.fragmentsViewModels
 
 import android.app.Application
-import android.content.res.Resources
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -15,16 +14,12 @@ import com.george.ktorapp.model.posts.InsDelPostResponse
 import com.george.ktorapp.model.posts.GetPostsResponse
 import com.george.ktorapp.model.posts.react.ReactRequest
 import com.george.ktorapp.network.ApiClient.Companion.api
-import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.MainFragmentViewModel.Companion.TAG
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import okhttp3.ResponseBody
 import retrofit2.HttpException
-import retrofit2.Response
-import retrofit2.http.HTTP
 
 class MainFragmentViewModel(val app: Application) : AndroidViewModel(app) {
 

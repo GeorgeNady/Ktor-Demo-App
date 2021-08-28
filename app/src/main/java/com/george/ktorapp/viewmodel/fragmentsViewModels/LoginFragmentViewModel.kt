@@ -1,4 +1,4 @@
-package com.george.ktorapp.ui.viewmodel.fragmentsViewModels
+package com.george.ktorapp.viewmodel.fragmentsViewModels
 
 import android.app.Application
 import android.util.Log
@@ -11,7 +11,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.george.Models.Person.AuthRequests.LoginRequest
 import com.george.ktorapp.model.Auth.AuthResponse
-import com.george.ktorapp.network.ApiClient
 import com.george.ktorapp.network.ApiClient.Companion.api
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

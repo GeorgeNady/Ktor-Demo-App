@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.george.ktorapp.R
 import com.george.ktorapp.databinding.ItemPostBinding
 import com.george.ktorapp.model.posts.Post
-import com.george.ktorapp.ui.activities.mainActivity.fragments.MyPostsFragment
+import com.george.ktorapp.ui.activities.main.fragments.MyProfileFragment
 
-class MyPostsAdapter(val context: Context, val owner: MyPostsFragment) :
+class MyPostsAdapter(val context: Context, val owner: MyProfileFragment) :
     RecyclerView.Adapter<MyPostsAdapter.PostsAdapterViewHolder>() {
 
     inner class PostsAdapterViewHolder(val binding: ItemPostBinding) :

@@ -1,4 +1,4 @@
-package com.george.ktorapp.ui.base
+package com.george.ktorapp.base
 
 
 @Retention(AnnotationRetention.RUNTIME)

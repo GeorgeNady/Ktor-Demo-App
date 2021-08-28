@@ -3,7 +3,7 @@ package com.george.ktorapp.utiles
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.george.ktorapp.MyApplication
+import com.george.ktorapp.base.BaseApplication
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -27,7 +27,7 @@ class Preferences(context: Context) {
 
         // we can use this Singleton object of Prefs and use from anywhere within the app.
         val prefs: Preferences by lazy {
-            Preferences(MyApplication.instance)
+            Preferences(BaseApplication.instance)
         }
 
     }

@@ -1,4 +1,4 @@
-package com.george.ktorapp.ui.viewmodel
+package com.george.ktorapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 

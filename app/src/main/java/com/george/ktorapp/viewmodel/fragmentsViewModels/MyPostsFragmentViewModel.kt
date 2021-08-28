@@ -1,4 +1,4 @@
-package com.george.ktorapp.ui.viewmodel.fragmentsViewModels
+package com.george.ktorapp.viewmodel.fragmentsViewModels
 
 import android.app.Application
 import android.util.Log
@@ -12,7 +12,6 @@ import androidx.lifecycle.MutableLiveData
 import com.george.ktorapp.model.posts.CreatePostRequest
 import com.george.ktorapp.model.posts.InsDelPostResponse
 import com.george.ktorapp.model.posts.GetPostsResponse
-import com.george.ktorapp.model.posts.Post
 import com.george.ktorapp.network.ApiClient.Companion.api
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

@@ -1,4 +1,4 @@
-package com.george.ktorapp.ui.base
+package com.george.ktorapp.base
 
 import android.app.Activity
 import android.app.ProgressDialog
@@ -14,7 +14,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.navOptions
 import com.george.ktorapp.R
-import com.george.ktorapp.utiles.Preferences
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
 import com.google.android.material.snackbar.Snackbar
 import com.volokh.danylo.hashtaghelper.HashTagHelper

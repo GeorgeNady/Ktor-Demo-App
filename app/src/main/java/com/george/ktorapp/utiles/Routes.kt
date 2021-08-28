@@ -9,8 +9,8 @@ object Routes {
     const val REGISTER_ROUTE = R.layout.fragment_register
 
     // MAIN_NAV
-    const val MAIN_ROUTE = R.layout.fragment_main
-    const val MY_POSTS_ROUTE = R.layout.fragment_my_posts
+    const val HOME_ROUTE = R.layout.fragment_home
+    const val MY_PROFILE_ROUTE = R.layout.fragment_my_profile
     const val SETTING_ROUTE = R.layout.fragment_setting
 
 

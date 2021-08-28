@@ -1,16 +1,12 @@
-package com.george.ktorapp.ui.base
+package com.george.ktorapp.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
-import com.google.firebase.messaging.RemoteMessage
-import com.pusher.pushnotifications.PushNotificationReceivedListener
-import com.pusher.pushnotifications.PushNotifications
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseActivity<B : ViewBinding,VM : ViewModel>(

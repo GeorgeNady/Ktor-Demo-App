@@ -1,12 +1,11 @@
-package com.george.ktorapp
+package com.george.ktorapp.base
 
 import android.app.Application
-import android.util.Log
 
-class MyApplication: Application() {
+class BaseApplication: Application() {
 
     companion object {
-        lateinit var instance: MyApplication
+        lateinit var instance: BaseApplication
     }
 
     override fun onCreate() {

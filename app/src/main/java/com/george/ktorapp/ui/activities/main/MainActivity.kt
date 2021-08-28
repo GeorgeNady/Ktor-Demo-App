@@ -1,10 +1,10 @@
-package com.george.ktorapp.ui.activities.mainActivity
+package com.george.ktorapp.ui.activities.main
 
 import android.content.Intent
 import com.george.ktorapp.databinding.ActivityMainBinding
-import com.george.ktorapp.ui.activities.loginRegisterActivity.LoginRegisterActivity
-import com.george.ktorapp.ui.base.BaseActivity
-import com.george.ktorapp.ui.viewmodel.MainViewModel
+import com.george.ktorapp.ui.activities.auth.AuthActivity
+import com.george.ktorapp.base.BaseActivity
+import com.george.ktorapp.viewmodel.MainViewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     ActivityMainBinding::inflate
@@ -14,7 +14,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 
     override fun initialization() {
         if (token.isNullOrEmpty()) {
-            val intent = Intent(this, LoginRegisterActivity::class.java)
+            val intent = Intent(this, AuthActivity::class.java)
             startActivity(intent)
             finish()
         }

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/bg_color"
-    tools:context="com.george.ktorapp.ui.activities.loginRegisterActivity.LoginRegisterActivity">
+    tools:context="com.george.ktorapp.ui.activities.auth.AuthActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"

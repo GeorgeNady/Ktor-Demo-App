@@ -1,5 +1,6 @@
-package com.george.ktorapp.ui.activities.mainActivity.fragments
+package com.george.ktorapp.ui.activities.main.fragments
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
@@ -9,67 +10,75 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.george.ktorapp.R
-import com.george.ktorapp.adapters.MyPostsAdapter
-import com.george.ktorapp.databinding.FragmentMyPostsBinding
+import com.george.ktorapp.adapters.PostsAdapter
 import com.george.ktorapp.model.posts.CreatePostRequest
 import com.george.ktorapp.model.posts.InsDelPostResponse
 import com.george.ktorapp.model.posts.Post
-import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
-import com.george.ktorapp.ui.base.BaseFragment
-import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.MainFragmentViewModel
-import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.MyPostsFragmentViewModel
-import com.george.ktorapp.utiles.Routes.MY_POSTS_ROUTE
+import com.george.ktorapp.ui.activities.auth.AuthActivity
+import com.george.ktorapp.base.ActivityFragmentAnnoation
+import com.george.ktorapp.base.BaseFragment
+import com.george.ktorapp.databinding.FragmentHomeBinding
+import com.george.ktorapp.viewmodel.fragmentsViewModels.MainFragmentViewModel
+import com.george.ktorapp.utiles.Preferences.Companion.prefs
+import com.george.ktorapp.utiles.Routes.HOME_ROUTE
 
-@ActivityFragmentAnnoation(MY_POSTS_ROUTE)
-class MyPostsFragment : BaseFragment<FragmentMyPostsBinding>() {
+@ActivityFragmentAnnoation(HOME_ROUTE)
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override val TAG: String get() = this.javaClass.name
-    private lateinit var viewModel: MyPostsFragmentViewModel
-    private lateinit var myPostsAdapter: MyPostsAdapter
-    lateinit var mainViewModel : MainFragmentViewModel
+    lateinit var viewModel: MainFragmentViewModel
+    private lateinit var postsAdapter: PostsAdapter
     var isLoading = false
     var isLastPage = false
     var isScrolling = false
-    private val myPostsList = mutableListOf<Post>()
-    private var myPostsPage = 1
+    private val postsList = mutableListOf<Post>()
+    private var postsPage = 1
 
     override fun initialization() {}
 
     override fun initViewModel() {
-        viewModel = ViewModelProvider(this).get(MyPostsFragmentViewModel::class.java)
-        mainViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
         setupRecyclerView()
     }
 
     override fun setListener() {
-        myPostsList.clear()
-        viewModel.getMyPosts(myPostsPage, binding!!.progressRecycler)
+        postsList.clear()
+        viewModel.getPosts(postsPage, binding!!.progressRecycler)
             .observe(this, { response ->
                 binding?.apply {
-                    notifyChanges(response.data,myPostsList,tvEmptyList)
+                    notifyChanges(response.data,postsList,tvEmptyList)
                 }
             })
 
+
         binding?.apply {
-            tvEmptyList.visibility = if (myPostsList.isEmpty()) View.VISIBLE else View.GONE
+            tvUserName.text = prefs.prefsUserName
+            tvEmptyList.visibility = if (postsList.isEmpty()) View.VISIBLE else View.GONE
             swipeRefresh.also {
                 val primaryColor = resources.getColor(R.color.primary)
                 it.setColorSchemeColors(primaryColor)
             }
             swipeRefresh.setOnRefreshListener {
-                myPostsPage = 1
-                myPostsList.clear()
+                postsPage = 1
+                postsList.clear()
                 isLastPage = false
-                viewModel.getMyPosts(myPostsPage, binding!!.progressRecycler)
-                    .observe(this@MyPostsFragment, { response ->
+                viewModel.getPosts(postsPage, binding!!.progressRecycler)
+                    .observe(this@HomeFragment, { response ->
                         binding?.apply {
-                            notifyChanges(response.data,myPostsList,tvEmptyList)
+                            notifyChanges(response.data,postsList,tvEmptyList)
                         }
                     })
                 swipeRefresh.isRefreshing = false
             }
-            btnBack.setOnClickListener {
-                findNavController().popBackStack()
+
+            btnSetting.setOnClickListener {
+                findNavController().navigate(R.id.settingFragment, null, navOptions)
+            }
+            btnLogout.setOnClickListener {
+                clearPrefsUserData()
+                val intent = Intent(requireContext(), AuthActivity::class.java)
+                requireActivity().startActivity(intent)
+                requireActivity().finish()
             }
             btnPost.setOnClickListener {
                 val content = CreatePostRequest(etPostContent.text.toString())
@@ -80,16 +89,21 @@ class MyPostsFragment : BaseFragment<FragmentMyPostsBinding>() {
                         showSnackBar(requireContext(), root, "I Guess this short content")
                     } else {
                         viewModel.createPost(content, progressSend, btnPost)
-                            .observe(this@MyPostsFragment, { response ->
+                            .observe(this@HomeFragment, { response ->
                                 createNewPostHandler(response)
                             })
                     }
                 }
 
             }
+            ivUserAvatar.setOnClickListener {
+                findNavController().navigate(R.id.myPostsFragment, null, navOptions)
+            }
+
 
         }
     }
+
 
     private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -109,19 +123,15 @@ class MyPostsFragment : BaseFragment<FragmentMyPostsBinding>() {
                         isTotalMoreThanVisible && isScrolling
 
             if (shouldPaginate) {
-                myPostsPage++
-                viewModel.getMyPosts(myPostsPage, binding!!.progressRecycler)
-                    .observe(this@MyPostsFragment, { response ->
-                        if (myPostsList.isNotEmpty()) {
-                            if (response.data.size < 10) isLastPage = true
-                            val newList = response.data.also { Log.d(TAG, "onScrolled: $it") }
-                            myPostsList.addAll(newList)
-                            myPostsAdapter.differ.submitList(myPostsList).also {
-                                Log.d(TAG, "setListener: submitted Paginate")
-                                myPostsAdapter.notifyDataSetChanged()
+                postsPage++
+                viewModel.getPosts(postsPage, binding!!.progressRecycler)
+                    .observe(this@HomeFragment, { response ->
+                        if (postsList.isNotEmpty()) {
+                            if (response.data.size < 10) {
+                                isLastPage = true
+                                showSnackBar(requireContext(),binding!!.root,"end of result")
                             }
-                            binding!!.tvEmptyList.visibility =
-                                if (myPostsList.isEmpty()) View.VISIBLE else View.GONE
+                            notifyChanges(response.data,postsList,binding!!.tvEmptyList)
                         }
                     })
                 isScrolling = false
@@ -138,33 +148,36 @@ class MyPostsFragment : BaseFragment<FragmentMyPostsBinding>() {
     }
 
     private fun setupRecyclerView() {
-        myPostsAdapter = MyPostsAdapter(requireContext(),this@MyPostsFragment)
+        postsAdapter = PostsAdapter(requireContext(),this@HomeFragment)
         with(binding!!.rvPosts) {
             itemAnimator = DefaultItemAnimator()
-            addOnScrollListener(this@MyPostsFragment.scrollListener)
-            adapter = myPostsAdapter
+            addOnScrollListener(this@HomeFragment.scrollListener)
+            adapter = postsAdapter
         }
     }
 
-    private fun notifyChanges(posts: List<Post>, viewModelPosts: MutableList<Post>, emptyView: View) {
-        viewModelPosts.addAll(posts)
-        with(myPostsAdapter) {
-            differ.submitList(viewModelPosts).also {
-                Log.d(TAG, "notify: $posts")
-                myPostsAdapter.notifyDataSetChanged()
+    private fun notifyChanges(resPosts: List<Post>, postsList: MutableList<Post>, emptyView: View) {
+        try {
+            postsList.addAll(resPosts)
+            Log.d(TAG, "notify: $resPosts")
+            postsAdapter.apply {
+                differ.submitList(postsList)
+                notifyDataSetChanged()
             }
+            emptyView.visibility = if (postsList.isEmpty()) View.VISIBLE else View.GONE
+        } catch (e: Exception) {
+            Log.e(TAG, "notify: $e", )
         }
-        emptyView.visibility = if (viewModelPosts.isEmpty()) View.VISIBLE else View.GONE
     }
 
-    private fun FragmentMyPostsBinding.createNewPostHandler(response: InsDelPostResponse) {
+    private fun FragmentHomeBinding.createNewPostHandler(response: InsDelPostResponse) {
         tvEmptyList.visibility = View.GONE
         showSnackBar(requireContext(), root, response.message)
         etPostContent.text.clear()
-        this@MyPostsFragment.hideKeyboard()
-        myPostsList.add(0, response.post)
-        myPostsAdapter.apply {
-            differ.submitList(myPostsList)
+        this@HomeFragment.hideKeyboard()
+        postsList.add(0, response.post)
+        postsAdapter.apply {
+            differ.submitList(postsList)
             notifyItemInserted(0)
         }
     }
@@ -172,15 +185,18 @@ class MyPostsFragment : BaseFragment<FragmentMyPostsBinding>() {
     fun notifyDelete(post:Post,index:Int) {
         try {
             showSnackBar(requireContext(),binding!!.root,"Deleted")
-            myPostsList.removeAt(myPostsList.indexOf(post))
-            myPostsAdapter.apply {
-                differ.submitList(myPostsList)
+            postsList.removeAt(postsList.indexOf(post))
+            postsAdapter.apply {
+                differ.submitList(postsList)
                 notifyItemRemoved(index)
             }
-            if (myPostsList.isEmpty()) binding!!.tvEmptyList.visibility = View.GONE
+            if (postsList.isEmpty()) binding!!.tvEmptyList.visibility = View.GONE
         } catch (e: Exception) {
             Log.e(TAG, "notify: $e", )
         }
     }
 
 }
+
+
+

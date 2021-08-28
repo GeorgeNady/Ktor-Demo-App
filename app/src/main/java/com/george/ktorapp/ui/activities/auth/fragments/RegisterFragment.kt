@@ -1,4 +1,4 @@
-package com.george.ktorapp.ui.activities.loginRegisterActivity.fragments
+package com.george.ktorapp.ui.activities.auth.fragments
 
 import android.content.Intent
 import android.util.Log
@@ -7,10 +7,10 @@ import androidx.navigation.fragment.findNavController
 import com.george.ktorapp.model.Auth.RegisterRequest
 import com.george.ktorapp.R
 import com.george.ktorapp.databinding.FragmentRegisterBinding
-import com.george.ktorapp.ui.activities.mainActivity.MainActivity
-import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
-import com.george.ktorapp.ui.base.BaseFragment
-import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.RegisterFragmentViewModel
+import com.george.ktorapp.ui.activities.main.MainActivity
+import com.george.ktorapp.base.ActivityFragmentAnnoation
+import com.george.ktorapp.base.BaseFragment
+import com.george.ktorapp.viewmodel.fragmentsViewModels.RegisterFragmentViewModel
 import com.george.ktorapp.utiles.Routes.REGISTER_ROUTE
 import kotlin.properties.Delegates
 

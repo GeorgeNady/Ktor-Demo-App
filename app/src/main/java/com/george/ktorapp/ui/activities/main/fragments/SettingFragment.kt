@@ -1,11 +1,11 @@
-package com.george.ktorapp.ui.activities.mainActivity.fragments
+package com.george.ktorapp.ui.activities.main.fragments
 
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.george.ktorapp.databinding.FragmentSettingBinding
-import com.george.ktorapp.ui.base.ActivityFragmentAnnoation
-import com.george.ktorapp.ui.base.BaseFragment
-import com.george.ktorapp.ui.viewmodel.fragmentsViewModels.SettingFragmentViewModel
+import com.george.ktorapp.base.ActivityFragmentAnnoation
+import com.george.ktorapp.base.BaseFragment
+import com.george.ktorapp.viewmodel.fragmentsViewModels.SettingFragmentViewModel
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
 import com.george.ktorapp.utiles.Routes.SETTING_ROUTE
 

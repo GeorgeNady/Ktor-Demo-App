@@ -14,9 +14,9 @@ import com.george.ktorapp.R
 import com.george.ktorapp.databinding.ItemPostBinding
 import com.george.ktorapp.model.posts.Post
 import com.george.ktorapp.model.posts.react.ReactRequest
-import com.george.ktorapp.ui.activities.mainActivity.fragments.MainFragment
+import com.george.ktorapp.ui.activities.main.fragments.HomeFragment
 
-class PostsAdapter(val context: Context, private val owner: MainFragment) :
+class PostsAdapter(val context: Context, private val owner: HomeFragment) :
     RecyclerView.Adapter<PostsAdapter.PostsAdapterViewHolder>() {
 
     companion object {
