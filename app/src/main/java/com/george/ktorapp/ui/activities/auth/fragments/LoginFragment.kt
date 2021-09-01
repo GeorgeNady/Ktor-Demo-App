@@ -23,10 +23,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private var canLogin by Delegates.notNull<Boolean>()
 
     override fun initialization() {
-
-    }
-
-    override fun initViewModel() {
         viewModel = ViewModelProvider(this).get(LoginFragmentViewModel::class.java)
     }
 

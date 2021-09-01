@@ -16,10 +16,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     lateinit var viewModel: SettingFragmentViewModel
 
     override fun initialization() {
-
-    }
-
-    override fun initViewModel() {
         viewModel = ViewModelProvider(this).get(SettingFragmentViewModel::class.java)
     }
 

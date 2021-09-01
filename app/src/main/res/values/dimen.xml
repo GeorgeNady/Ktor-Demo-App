@@ -3,7 +3,7 @@
     <dimen name="layout_padding">@dimen/_20sdp</dimen>
 
     <dimen name="widget_margin">8dp</dimen>
-    <dimen name="corner_radius">15dp</dimen>
+    <dimen name="corner_radius">@dimen/_15sdp</dimen>
     <dimen name="h1_text_size">24sp</dimen>
     <dimen name="h2_text_size">22sp</dimen>
     <dimen name="p1_text_size">18sp</dimen>

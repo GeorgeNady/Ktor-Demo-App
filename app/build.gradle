@@ -146,7 +146,7 @@ dependencies {
     implementation "com.theartofdev.edmodo:android-image-cropper:2.8.+"
 
     // Pusher
-    implementation 'com.pusher:pusher-java-client:2.2.6'
+    implementation 'com.pusher:pusher-java-client:2.2.1'
 
     // Firebase BoM
     // implementation platform('com.google.firebase:firebase-bom:28.3.0')

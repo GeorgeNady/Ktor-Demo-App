@@ -22,5 +22,10 @@
         android:name="com.george.ktorapp.ui.activities.main.fragments.MyProfileFragment"
         android:label="MyPostsFragment"
         tools:layout="@layout/fragment_my_profile"/>
+    <fragment
+        tools:layout="@layout/fragment_my_profile2"
+        android:id="@+id/myProfile2Fragment"
+        android:name="com.george.ktorapp.ui.activities.main.fragments.MyProfile2Fragment"
+        android:label="MyProfile2Fragment" />
 
 </navigation>

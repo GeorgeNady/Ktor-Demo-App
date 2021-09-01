@@ -14,8 +14,10 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <!-- Customize your theme here. -->
         <item name="android:popupMenuStyle">@style/popup</item>
-        <item name="android:textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceLarge</item>
-        <item name="android:textAppearanceSmallPopupMenu">@style/myPopupMenuTextAppearanceSmall</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceLarge
+        </item>
+        <item name="android:textAppearanceSmallPopupMenu">@style/myPopupMenuTextAppearanceSmall
+        </item>
     </style>
 
     <!-- ************************************************************************* popup -->
@@ -23,17 +25,42 @@
         <item name="android:popupBackground">@drawable/custom_popup_bg</item>
         <item name="android:popupAnimationStyle">@android:anim/anticipate_interpolator</item>
         <item name="android:popupElevation">@dimen/corner_radius</item>
-        <item name="android:popupEnterTransition" tools:targetApi="n">@android:transition/fade</item>
+        <item name="android:popupEnterTransition" tools:targetApi="n">@android:transition/fade
+        </item>
         <item name="android:popupExitTransition" tools:targetApi="n">@android:transition/fade</item>
         <item name="rippleColor">@color/stroke</item>
     </style>
+
     <style name="myPopupMenuTextAppearanceSmall" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Small">
         <item name="android:textColor">@color/p_text</item>
         <item name="android:textSize">15sp</item>
     </style>
+
     <style name="myPopupMenuTextAppearanceLarge" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Large">
         <item name="android:textColor">@color/p_text</item>
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="Theme.KtorApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.KtorApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.KtorApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- ****************************************************** Bottom Sheet  -->
+    <style name="BottomSheetTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@color/gry</item>
+    </style>
+    <!-- It helps change color when you press and slide on Switch -->
+    <style name="MyIOSSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#F50000</item>
+        <item name="android:colorForeground">#888888</item>
+    </style>
 </resources>

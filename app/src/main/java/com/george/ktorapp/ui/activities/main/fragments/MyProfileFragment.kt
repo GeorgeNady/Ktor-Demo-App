@@ -15,13 +15,15 @@ import com.george.ktorapp.model.posts.InsDelPostResponse
 import com.george.ktorapp.model.posts.Post
 import com.george.ktorapp.base.ActivityFragmentAnnoation
 import com.george.ktorapp.base.BaseFragment
+import com.george.ktorapp.databinding.FragmentMyProfile2Binding
 import com.george.ktorapp.databinding.FragmentMyProfileBinding
 import com.george.ktorapp.viewmodel.fragmentsViewModels.MainFragmentViewModel
 import com.george.ktorapp.viewmodel.fragmentsViewModels.MyPostsFragmentViewModel
 import com.george.ktorapp.utiles.Routes.MY_PROFILE_ROUTE
+import com.george.ktorapp.utiles.Routes.MY_PROFILE_ROUTE2
 
-@ActivityFragmentAnnoation(MY_PROFILE_ROUTE)
-class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
+@ActivityFragmentAnnoation(MY_PROFILE_ROUTE2)
+class MyProfileFragment : BaseFragment<FragmentMyProfile2Binding>() {
 
     override val TAG: String get() = this.javaClass.name
     private lateinit var viewModel: MyPostsFragmentViewModel
@@ -33,24 +35,22 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
     private val myPostsList = mutableListOf<Post>()
     private var myPostsPage = 1
 
-    override fun initialization() {}
-
-    override fun initViewModel() {
+    override fun initialization() {
         viewModel = ViewModelProvider(this).get(MyPostsFragmentViewModel::class.java)
         mainViewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
-        setupRecyclerView()
+        // setupRecyclerView()
     }
 
     override fun setListener() {
         myPostsList.clear()
-        viewModel.getMyPosts(myPostsPage, binding!!.progressRecycler)
+        /*viewModel.getMyPosts(myPostsPage, binding!!.progressRecycler)
             .observe(this, { response ->
                 binding?.apply {
                     notifyChanges(response.data,myPostsList,tvEmptyList)
                 }
-            })
+            })*/
 
-        binding?.apply {
+        /*binding?.apply {
             tvEmptyList.visibility = if (myPostsList.isEmpty()) View.VISIBLE else View.GONE
             swipeRefresh.also {
                 val primaryColor = resources.getColor(R.color.primary)
@@ -88,7 +88,7 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
             }
 
-        }
+        }*/
     }
 
     private val scrollListener = object : RecyclerView.OnScrollListener() {
@@ -110,7 +110,7 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
             if (shouldPaginate) {
                 myPostsPage++
-                viewModel.getMyPosts(myPostsPage, binding!!.progressRecycler)
+                /*viewModel.getMyPosts(myPostsPage, binding!!.progressRecycler)
                     .observe(this@MyProfileFragment, { response ->
                         if (myPostsList.isNotEmpty()) {
                             if (response.data.size < 10) isLastPage = true
@@ -123,7 +123,7 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
                             binding!!.tvEmptyList.visibility =
                                 if (myPostsList.isEmpty()) View.VISIBLE else View.GONE
                         }
-                    })
+                    })*/
                 isScrolling = false
             }
 
@@ -137,14 +137,14 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
         }
     }
 
-    private fun setupRecyclerView() {
+    /*private fun setupRecyclerView() {
         myPostsAdapter = MyPostsAdapter(requireContext(),this@MyProfileFragment)
         with(binding!!.rvPosts) {
             itemAnimator = DefaultItemAnimator()
             addOnScrollListener(this@MyProfileFragment.scrollListener)
             adapter = myPostsAdapter
         }
-    }
+    }*/
 
     private fun notifyChanges(posts: List<Post>, viewModelPosts: MutableList<Post>, emptyView: View) {
         viewModelPosts.addAll(posts)
@@ -169,7 +169,7 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
         }
     }
 
-    fun notifyDelete(post:Post,index:Int) {
+    /*fun notifyDelete(post:Post,index:Int) {
         try {
             showSnackBar(requireContext(),binding!!.root,"Deleted")
             myPostsList.removeAt(myPostsList.indexOf(post))
@@ -181,6 +181,6 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
         } catch (e: Exception) {
             Log.e(TAG, "notify: $e", )
         }
-    }
+    }*/
 
 }

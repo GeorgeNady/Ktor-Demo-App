@@ -4,6 +4,7 @@ import android.content.Intent
 import com.george.ktorapp.databinding.ActivityMainBinding
 import com.george.ktorapp.ui.activities.auth.AuthActivity
 import com.george.ktorapp.base.BaseActivity
+import com.george.ktorapp.utiles.PusherConfiguration.pusher
 import com.george.ktorapp.viewmodel.MainViewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
@@ -22,6 +23,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 
     override fun setListener() {
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pusher.disconnect()
     }
 
 }

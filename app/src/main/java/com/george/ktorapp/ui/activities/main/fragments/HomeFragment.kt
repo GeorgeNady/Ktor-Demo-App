@@ -20,7 +20,15 @@ import com.george.ktorapp.base.BaseFragment
 import com.george.ktorapp.databinding.FragmentHomeBinding
 import com.george.ktorapp.viewmodel.fragmentsViewModels.MainFragmentViewModel
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
+import com.george.ktorapp.utiles.PusherConfiguration.PUSHER_POSTS_CHANNEL
+import com.george.ktorapp.utiles.PusherConfiguration.PUSHER_POSTS_EVENT
+import com.george.ktorapp.utiles.PusherConfiguration.pusher
 import com.george.ktorapp.utiles.Routes.HOME_ROUTE
+import com.google.gson.Gson
+import com.pusher.client.channel.Channel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @ActivityFragmentAnnoation(HOME_ROUTE)
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -28,15 +36,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val TAG: String get() = this.javaClass.name
     lateinit var viewModel: MainFragmentViewModel
     private lateinit var postsAdapter: PostsAdapter
+    private lateinit var pusherChannel: Channel
+
     var isLoading = false
     var isLastPage = false
     var isScrolling = false
     private val postsList = mutableListOf<Post>()
     private var postsPage = 1
 
-    override fun initialization() {}
-
-    override fun initViewModel() {
+    override fun initialization() {
         viewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
         setupRecyclerView()
     }
@@ -49,7 +57,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     notifyChanges(response.data,postsList,tvEmptyList)
                 }
             })
-
 
         binding?.apply {
             tvUserName.text = prefs.prefsUserName
@@ -89,22 +96,45 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         showSnackBar(requireContext(), root, "I Guess this short content")
                     } else {
                         viewModel.createPost(content, progressSend, btnPost)
-                            .observe(this@HomeFragment, { response ->
-                                createNewPostHandler(response)
+                            .observe(this@HomeFragment, { _ ->
+                                // createNewPostHandler(response)
                             })
                     }
                 }
 
             }
             ivUserAvatar.setOnClickListener {
-                findNavController().navigate(R.id.myPostsFragment, null, navOptions)
+                findNavController().navigate(R.id.myProfile2Fragment, null, navOptions)
             }
 
 
         }
     }
 
+    // ****************************************************************************** PUSHER HANDLER
+    override fun onResume() {
+        super.onResume()
+        pusher.connect()
+        pusherChannel = pusher.subscribe(PUSHER_POSTS_CHANNEL)
+        binding?.postsEventBinding()
+    }
 
+    override fun onPause() {
+        super.onPause()
+        pusher.unsubscribe(PUSHER_POSTS_CHANNEL)
+    }
+
+    private fun FragmentHomeBinding.postsEventBinding() {
+        pusherChannel.bind(PUSHER_POSTS_EVENT) {
+            Log.d(TAG, "pusherChannel: ${it.data}")
+            val gson = Gson()
+            val comment = gson.fromJson(it.data, Post::class.java)
+            Log.d(TAG, "postsEventBinding: $comment")
+            addNewPostHandler(comment)
+        }
+    }
+
+    // *********************************************************************** RECYCLER VIEW HANDLER
     private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
@@ -179,6 +209,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         postsAdapter.apply {
             differ.submitList(postsList)
             notifyItemInserted(0)
+        }
+    }
+
+    private fun FragmentHomeBinding.addNewPostHandler(post: Post) {
+        postsList.add(0, post)
+        postsAdapter.apply {
+            differ.submitList(postsList)
+            CoroutineScope(Dispatchers.Main).launch {
+                rvPosts.scrollToPosition(0)
+                notifyItemInserted(0)
+            }
         }
     }
 

@@ -20,6 +20,7 @@ class Preferences(context: Context) {
         const val USER_NAME_PREF = "user_name"
         const val USER_EMAIL_PREF = "user_email"
         const val USER_PHONE_PREF = "user_phone"
+        const val USER_AVATAR_PREF = "user_avatar"
 
         // NETWORK DATA
         const val DOMAIN_PREF = "domain"
@@ -64,6 +65,10 @@ class Preferences(context: Context) {
     var prefsUserName: String
         get() = sharedPrefs.getString(USER_NAME_PREF, "") ?: ""
         set(value) = sharedPrefs.edit { putString(USER_NAME_PREF, value) }
+
+    var prefsUserAvatar: String
+        get() = sharedPrefs.getString(USER_AVATAR_PREF, "") ?: ""
+        set(value) = sharedPrefs.edit { putString(USER_AVATAR_PREF, value) }
 
     var prefsUserEmail: String
         get() = sharedPrefs.getString(USER_EMAIL_PREF, "") ?: ""

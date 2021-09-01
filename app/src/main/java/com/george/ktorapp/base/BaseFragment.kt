@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.navOptions
+import com.bumptech.glide.Priority
+import com.bumptech.glide.request.RequestOptions
 import com.george.ktorapp.R
 import com.george.ktorapp.utiles.Preferences.Companion.prefs
 import com.google.android.material.snackbar.Snackbar
@@ -24,8 +26,8 @@ abstract class BaseFragment<T : ViewDataBinding?> : Fragment() {
     abstract val TAG: String
 
     private var contentId = 0
-    protected var bundle: Bundle? = null
-    protected var a: Activity? = null
+    private var bundle: Bundle? = null
+    private var a: Activity? = null
     protected var binding: T? = null
     var progressDialog: ProgressDialog? = null
     var hashTagHelper: HashTagHelper? = null
@@ -55,7 +57,7 @@ abstract class BaseFragment<T : ViewDataBinding?> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
+        initialization()
         setListener()
     }
 
@@ -68,8 +70,11 @@ abstract class BaseFragment<T : ViewDataBinding?> : Fragment() {
         }
     }
 
+    val options = RequestOptions()
+        .centerCrop()
+        .priority(Priority.HIGH)
+
     protected abstract fun initialization() // TODO : add declarations and variables
-    protected abstract fun initViewModel() // TODO : add viewModel declaration
     protected abstract fun setListener() // TODO : Logic here
 
     fun showSnackBar(view:View,message:String) {

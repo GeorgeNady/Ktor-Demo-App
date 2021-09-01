@@ -104,10 +104,10 @@ class MyPostsAdapter(val context: Context, val owner: MyProfileFragment) :
                 mPost = differ.currentList[postIndex]!!
             }
         }
-        owner.apply {
+        /*owner.apply {
             mainViewModel.deletePost(postId, progressBar)
                 .observe(this, { notifyDelete(mPost!!,postIndex) })
-        }
+        }*/
     }
 
 }

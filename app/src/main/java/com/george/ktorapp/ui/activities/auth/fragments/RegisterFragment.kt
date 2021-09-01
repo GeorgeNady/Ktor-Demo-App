@@ -22,10 +22,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private var canRegister by Delegates.notNull<Boolean>()
 
     override fun initialization() {
-
-    }
-
-    override fun initViewModel() {
         viewModel = ViewModelProvider(this).get(RegisterFragmentViewModel::class.java)
     }
 
